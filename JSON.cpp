@@ -293,12 +293,20 @@ string JSON::ONE::toString(int format){
 					}
 				s = (s.empty()?"[]":"[ " + s + " ]");
 				}else{
+				string line;
+				int ii,sizeList = VS.size();
+				ii = 0;
 				for(;tt!=VS.end();++tt){
-					if(!first)s+=",\n";
-					first = 0;
-					string u = *tt;
-					s+=u;
+					string u;
+					u += *tt;
+					if(ii<sizeList-1)u+=",";
+					++ii;
+					if((line + u).size()<=80)line+=u; else {
+						s += line + "\n";
+						line = u;
+						}
 					}
+				s += line;
 				if(s.empty())s="[]"; else {
 					s = "[\n" + s;
 					poTabu(s);
